@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+		<script type="text/javascript" th:src="@{'/js/manage/jquery'+'-3.3.1.min.js'}"></script>
+		<script type="text/javascript" th:src="@{/js/manage/chat.js}"></script>
+		<script type="text/javascript" th:src="@{/js/manage/bootstrap.min.js}"></script>
+		<script type="text/javascript">
+			function showData(data) {
+			var str = "";//定义用于拼接的字符串
+			for (var i = 0; i < data.length; i++) {
+              //拼接表格的行和列
+			  str = "<tr><td>" + data[i].ID + "</td><td>" + data[i].path + "</td><td>" + data[i].name+"</td></tr>";
+              //追加到table中
+              $("#tab").append(str);         
+			  };
+			};
+		</script>
+		<title></title>
+	</head>
+	<body>
+		<table class="table table-hover" id="tab">
+			<caption>RoomList</caption>
+			<thead>
+				<tr>
+				  <!-- <th>序号</th> -->
+				  <th>聊天室ID</th>
+				  <th>路径</th>
+				  <th>名称</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr>
+				  <th>1</th>
+				  <td></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <th>2</th>
+				  <td></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <th>3</th>
+				  <td></td>
+				  <td></td>
+				  <td></td>
+				</tr> -->
+			</tbody>
+		</table>
+	</body>
+</html>

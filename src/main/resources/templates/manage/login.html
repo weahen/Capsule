@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+		<script type="text/javascript" th:src="@{/js/manage/jquery-3.3.1.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/manage/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{/js/manage/jquery.validate.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/manage/messages_zh.js}"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				// 在键盘按下并释放及提交后验证提交表单
+				$("#commentForm").validate({
+					rules:{
+						username:{
+							required:true,
+							minlength:6,
+						},
+						password:{
+							required:true,
+							minlength:8,
+						},
+					},
+					messages:{
+						username:{
+							required:"请输入用户名！",
+							minlength:"用户名必须由6个以上字符组成",
+						},
+						password:{
+							required:"请输入密码！",
+							minlength:"密码长度不能小于8",
+						},
+					}
+				});
+			});
+		</script>
+		<title>时空商用版后台管理系统login</title>
+	</head>
+	<body>
+		<div id="box">
+			<div id="biaoti">
+				<p class="p1">时空商用版后台管理系统</p>
+				<p class="p2">Background Management system of spatio-temporal Commercial Edition</p>
+				<p class="p3">
+					管理员登陆/LOGIN
+				</p>
+			</div>
+			
+			<div id="line">
+			</div>
+			<div id="box1">
+				<form  class="skform" th:action="@{/login}" th:object="${loginInfo}" method="post">
+					<p>
+						<label for="username">管理员ID：</label>
+						<input type="text" name="username" id="username" th:field="*{ID}"/>
+					</p>
+					<p>
+						<label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+						<input type="password" name="password" id="password" th:field="*{PSW}"/>
+					</p>
+					<!-- <p>
+						<label for="yanzheng">验&nbsp;&nbsp;证&nbsp;&nbsp;码：</label>
+						<input type="text" name="" id=""/>
+					</p> -->
+					<p>
+					<input class="s1" type="submit" value="登陆" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input class="s1" type="reset" value="重置"/>
+					</p>
+				</form>
+			</div>
+			<div id="nonum">
+				<a href="regist">还没有账号？点此进行注册</a>
+			</div>
+			<div id="bottom">
+				<p>CopyRight@2019 北京工业大学</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京ICP备18043220号-1</p>
+			</div>
+		</div>
+	</body>
+</html>

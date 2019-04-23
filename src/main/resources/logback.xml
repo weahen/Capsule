@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+<contextName>spring-boot-logging</contextName>
+<property name="messageLOG.path" value="messageLOG" />
+    <property name="serverLOG.path" value="serverLOG"/>
+
+<!--输出到控制台-->
+<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- 级别过滤 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>INFO</level>
+        <onMatch>ACCEPT</onMatch>
+        <onMismatch>DENY</onMismatch>
+    </filter>
+    <encoder>
+        <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+</appender>
+
+<!--输出到文件-->
+<appender name="messageLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${messageLOG.path}/chatmessageLOG.log</file>
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+        <evaluator>
+            <expression> return message.contains("SEND ---") || message.contains("RECV ---");</expression>
+        </evaluator>
+        <onMismatch>DENY</onMismatch>
+        <onMatch>ACCEPT</onMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${messageLOG.path}/chatmessageLOG.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+        <!-- 日志保存周期 -->
+        <maxHistory>30</maxHistory>
+        <!-- 总大小 -->
+        <!--<totalSizeCap>1GB</totalSizeCap>-->
+    </rollingPolicy>
+    <encoder>
+        <pattern>%msg%n</pattern>
+    </encoder>
+</appender>
+
+   <appender name="serverLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       <file>${serverLOG.path}/serverLOG.log</file>
+       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+           <fileNamePattern>${serverLOG.path}/serverLOG.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+           <!-- 日志保存周期 -->
+           <maxHistory>30</maxHistory>
+           <!-- 总大小 -->
+           <!--<totalSizeCap>1GB</totalSizeCap>-->
+       </rollingPolicy>
+       <encoder>
+           <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+       </encoder>
+   </appender>
+
+<root level="info">
+    <appender-ref ref="console" />
+    <appender-ref ref="messageLOG" />
+</root>
+
+<!-- logback为java中的包 -->
+
+</configuration>

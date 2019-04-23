@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatRoom</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+    <script th:src="@{/js/chat.js}"></script>
+</head>
+<body>
+<div id="selectRoom">
+    <select id="RoomSelector">
+        <option>Choose ChatRoom</option>
+        <option th:each="RoomList:${session.RoomList}" th:value="${RoomList.getPATH()}" th:text="${RoomList.getNAME()}"></option>
+    </select>
+</div>
+
+<div>
+    <textarea id="textarea"></textarea>
+    <button id="send" type="submit">send</button>
+</div>
+
+<div>
+    <button id="connect">Connect</button>
+</div>
+
+</body>
+</html>

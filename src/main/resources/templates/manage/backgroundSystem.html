@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" th:href="@{/js/jquery-easyui-1.7.5/themes/default/easyui.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/js/jquery-easyui-1.7.5/themes/icon.css}"/>
+		<script type="text/javascript" th:src="@{/js/jquery-easyui-1.7.5/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/jquery-easyui-1.7.5/locale/easyui-lang-zh_CN.js}"></script>
+		<script type="text/javascript" th:src="@{/js/jquery-easyui-1.7.5/jquery.easyui.min.js}"></script>
+		<title></title>
+	</head>
+		<body class="easyui-layout">
+			<!-- 上部 -->
+			<div region="north" style="height: 78px; background-color: #E0ECFF">
+				<table style="padding: 5px" width="100%">
+					<tr>
+						<td width="50%"> <h2>时空商用版后台管理系统</h2> </td>
+						<td  valign="bottom" align="right" width="50%"> <font size="3"> <strong>欢迎：</strong><a th:text="${loginInfo.getID()}"></a></font> </td>
+					</tr>
+				</table>
+			</div>
+			<!-- 左部 -->
+			<div region="west" style="width: 200px" title="导航菜单" split="true">
+				<div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="常用操作" data-options="selected:true,iconCls:'icon-item'" style="padding: 10px">
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">新增</a>
+            </div>
+            <div title="管理" data-options="iconCls:'icon-bkgl'" style="padding:10px;">
+                <a href="viewAllRoom" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">查看聊天室</a>
+                <a href="addroom" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">添加聊天室</a>
+				<a href="#" class="easyui-linkbutton"
+				   data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">管理聊天室</a>
+            </div>
+            <div title="类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">类别信息管理</a>
+            </div>
+            <div title="评论管理" data-options="iconCls:'icon-plgl'" style="padding:10px">
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-review'" style="width: 150px">评论审核</a>
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-plgl'" style="width: 150px;">评论信息管理</a>
+            </div>
+            <div title="个人信息管理" data-options="iconCls:'icon-personal'" style="padding:10px">
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-personal'" style="width: 150px;">修改个人信息</a>
+            </div>
+            <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
+                <a href="#" class="easyui-linkbutton"
+                   data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
+                <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'"
+                   style="width: 150px;">安全退出</a>
+            </div>
+        </div>
+			</div>
+			<!-- 中部 -->
+			<div data-options="region:'center'" style="background:#eee;">
+				<div class="easyui-tabs" fit="true" border="false" id="tabs">
+					<div title="首页" data-options="iconCls:'icon-home'">
+						<div align="center" style="padding-top: 100px"><font color="red" size="10">欢迎使用</font></div>
+					</div>
+				</div>
+			</div>
+			<!-- 下部 -->
+			<div region="south" style="height: 45px;" align="center">
+                    <p>CopyRight@2019 北京工业大学</p>
+			</div>
+	</body>
+</html>

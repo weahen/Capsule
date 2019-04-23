@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: Weahen
+    password: 773757315
+    url: jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#server:
+#  ssl:
+#    key-store: classpath:www.weahen.club.jks
+#    key-store-type: JKS
+#    key-alias: tomcat
+#    key-store-password: 51ys6cu8a432

@@ -1,0 +1,116 @@
+body {
+    background-color: white;
+	width:1920px;
+	height:930px;
+	margin:0;
+	padding:0;
+}
+
+.container
+{
+	max-height:930px;
+	height:930px;
+	max-width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:auto;
+	margin-top:auto;
+  background-color: #a5a5a4;
+}
+
+#left
+{
+
+	float:left;
+	width:318px;
+	height:930px;
+  margin-right:1px;
+}
+#kuang1{
+
+	background-color:gray;
+	height:926px;
+  width:318px;
+}
+.logo
+{
+  background-color: #83d32f;
+  height: 60px;
+  margin-left: 4px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.online-user
+{
+  height:802px;
+  background-color: #d5d1ca;
+  margin-left:4px;
+
+}
+
+.form-group
+{
+  height:54px;
+
+  margin-left: 4px;
+  background-color: #a5a5a4;
+}
+
+
+#right
+{
+
+	float:left;
+	width:680px;
+	height:930px;
+	overflow: hidden;
+	zoom: 1;
+  margin-right: 1px;
+}
+#kuang2
+{
+	background-color:gray;
+	height:930px;
+  width:680px;
+  margin-right: 2px;
+}
+
+#right-title
+{
+  height:40px;
+  text-align: center;
+  background-color: #d3d35d;
+  opacity:0.8;
+  margin-top:4px;
+}
+
+#chat-content
+{
+  height:780px;
+  background-color: white;
+  margin-bottom: 2px;
+}
+
+#user{
+
+background-color:#E0EEE0;
+height: 94px;
+}
+
+#send
+{
+	margin:4px;
+
+}
+
+#editArea
+{
+	margin:1px;
+	background-color:white;
+  height:64px;
+
+
+
+
+}
