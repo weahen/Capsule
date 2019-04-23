@@ -27,7 +27,7 @@ public interface RoomMapper {
     @Insert("insert into Room(NAME,PATH,FIELD,START_TIME,END_TIME,LOCATION) values (#{NAME},#{PATH},#{FIELD},#{START_TIME},#{END_TIME},#{LOCATION})")
     int addRoom(room r);
 
-    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac};")
+    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
     List<room> selectByMac(String mac);
 
 
