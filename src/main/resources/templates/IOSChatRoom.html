@@ -95,8 +95,6 @@
 </div>
 <script type="text/javascript" th:src="@{js/manage/jquery-3.3.1.min.js}"></script>
 <script type="text/javascript">
-	var id=10;
-	var path="/3079674";
     var stompClient = null;
     function connect() {
         var socket = new SockJS('/endpoint-websocket');
@@ -217,9 +215,11 @@
 		$('.question_text').css('max-width',$('.question').width()-60);
 	}
 	autoWidth();
-    $(function () {
-		connect();
-    });
+    function Initial(path0,id0){
+        path=path0;
+        id=id0;
+        connect();
+	}
 </script>
 </body>
 </html>
