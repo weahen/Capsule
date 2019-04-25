@@ -1,0 +1,226 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no" media="screen" />
+
+<title>ios聊天界面</title>
+
+<style type="text/css">
+	body{
+		background: #ebebeb;
+		}
+	@media all and (min-width: 640px) {
+	    body,html,.wenwen-footer,.speak_window{width:640px!important;margin:0 auto}
+	    .speak_window,.wenwen-footer{left:50%!important;margin-left:-320px}
+	}
+	input,button{
+		outline:none;
+		}
+	.wenwen-footer{width:100%;position:fixed;bottom:0px;left:0;background:#fff;padding:3%;border-top:solid 1px #ddd;box-sizing:border-box;}
+	.wenwen_btn,.wenwen_help{width:15%;text-align:center;}
+	.wenwen_btn img,.wenwen_help img{height:27px;}
+	.wenwen_text{height:29px;border-radius:5px;border:solid 1px #636162;box-sizing:border-box;width:66%;text-align:center;overflow:hidden;margin-left:2%;}
+	.circle-button{padding:0 5px;}
+	.wenwen_text .circle-button{font-size:13px;color:#666;line-height:29px;}
+	.write_box{background:#fff;width:100%;height:40px;line-height:40px;display:none;}
+	.write_box input{height:29px;padding:0 5px;line-height:40px;width:100%;box-sizing:border-box;border:0;}
+	.wenwen_help button{width:95%;background:#42929d;color:#fff;border-radius:5px;border:0;height:29px;display:none;}
+	#wenwen{height:100%;}
+	.speak_window{overflow-y:scroll;height:100%;width:100%;position:fixed;top:0;left:0;}
+	.speak_box{margin-bottom:70px;padding:10px;}
+	.question,.answer{margin-bottom:1rem;}
+	.question{text-align:right;}
+	.question>div{display:inline-block;}
+	.left{float:left;}
+	.right{float:right;}
+	.clear{clear:both;}
+	.heard_img{height:48px;width:48px;border-radius:5px;overflow:hidden;background:#ddd;}
+	.heard_img img{width:100%;height:100%}
+	.question_text,.answer_text{box-sizing:border-box;position:relative;display:table-cell;min-height:50px;}
+	.question_text{padding-right:20px;}
+	.answer_text{padding-left:20px;}
+	.question_text p,.answer_text p{border-radius:10px;padding:.5rem;margin:0;font-size:12px;line-height:28px;box-sizing:border-box;vertical-align:middle;display:table-cell;height:29px;word-wrap:break-word;}
+	.answer_text p{background:#fff;}
+	.question_text p{background:#42929d;color:#fff;text-align:left;}
+	.question_text i,.answer_text i{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;position:absolute;top:18px;}
+	.answer_text i{border-right:10px solid #fff;left:10px;}
+	.question_text i{border-left:10px solid #42929d;right:10px;}
+	.answer_text p a{color:#42929d;display:inline-block;}
+	audio{display:none;}
+	.saying{position:fixed;bottom:30%;left:50%;width:120px;margin-left:-60px;display:none;}
+	.saying img{width:100%;}
+	.write_list{position:absolute;left:0;width:100%;background:#fff;border-top:solid 1px #ddd;padding:5px;line-height:30px;}
+</style>
+	<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+	<script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+</head>
+<body>
+<div class="speak_window">
+	<div class="speak_box">
+		<div class="answer">
+			<div class="heard_img left"><img th:src="@{images/touxiang.jpg}"></div>
+			<div class="answer_text">
+				<p>你好呀，欢迎来到聊天室！</p>
+				<i></i>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="saying">
+	<img th:src="@{images/saying.gif}">
+</div>
+<div class="wenwen-footer">
+	<div class="wenwen_btn left" onClick="to_write()"><img th:src="@{images/jp_btn.png}"></div>
+	<div class="wenwen_text left">
+	    <div class="write_box">
+	        <input type="text" class="left" onKeyUp="keyup()" placeholder="请输入关键字" />
+	    </div>   
+	    <div class="circle-button" id="wenwen">
+	        按住 说话
+	    </div>
+	</div>
+	<div class="wenwen_help right">
+	    <a href="###">
+	        <img th:src="@{images/help_btn.png}">
+	    </a>
+	    <button onClick="up_say()" class="right" style="background-color: #42929d;">发送</button>
+	</div>
+	<div style="opacity:0;" class="clear"></div>
+</div>
+<script type="text/javascript" th:src="@{js/manage/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript">
+	var id=10;
+	var path="/3079674";
+    var stompClient = null;
+    function connect() {
+        var socket = new SockJS('/endpoint-websocket');
+        stompClient = Stomp.over(socket);
+//    welcome();
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+
+            //订阅群聊消息
+            stompClient.subscribe('/chat'+path, function (result) {
+                recv(JSON.parse(result.body));
+            });
+        });
+	}
+	function to_write(){
+	    $('.wenwen_btn img').attr('src','/images/yy_btn.png');
+	    $('.wenwen_btn').attr('onclick','to_say()');
+	    $('.write_box,.wenwen_help button').show();
+	    $('.circle-button,.wenwen_help a').hide();
+	    $('.write_box input').focus();
+	    for_bottom();
+	}
+
+	function to_say(){
+		$('.write_list').remove();
+	    $('.wenwen_btn img').attr('src','/images/jp_btn.png');
+	    $('.wenwen_btn').attr('onclick','to_write()');
+	    $('.write_box,.wenwen_help button').hide();
+	    $('.circle-button,.wenwen_help a').show();
+	}
+
+	function up_say(){
+		$('.write_list').remove();
+        var text = $('.write_box input').val();
+
+	    if(text == ''){
+	        alert('请输入提问！');
+	        $('.write_box input').focus();
+	    }else{
+
+	        $('.write_box input').val('');
+	        $('.write_box input').focus();
+	        autoWidth();
+	        for_bottom();
+            stompClient.send("/app/chatroom"+path, {}, JSON.stringify({'content': text,'path':path,'uid':id}));
+	    }
+	}
+	function recv(body){
+        if(body.uid==id)
+		{
+		    show_Isay(body);
+		}
+    	else
+		{
+            var ans  = '<div class="answer"><div class="heard_img left"><img src="/images/t2.jpg"></div>';
+            ans += '<div class="answer_text"><p>' + body.content + '</p><i></i>';
+            ans += '</div></div>';
+            $('.speak_box').append(ans);
+            for_bottom();
+        }
+            }
+    function show_Isay(body) {
+        var str = '<div class="question">';
+        str += '<div class="heard_img right"><img src="/images/touxiang.jpg"></div>';
+        str += '<div class="question_text clear"><p>' + body.content + '</p><i></i>';
+        str += '</div></div>';
+        $('.speak_box').append(str);
+    }
+	function keyup(){
+		var footer_height = $('.wenwen-footer').outerHeight(),
+			text = $('.write_box input').val(),
+			str = '<div class="write_list">'+text+'</div>';
+		if (text == '' || text == undefined){
+			$('.write_list').remove();
+		}else{
+			$('.wenwen-footer').append(str);
+			$('.write_list').css('bottom',footer_height);
+		}
+	}
+
+	var wen  = document.getElementById('wenwen');
+	function _touch_start(event){
+        event.preventDefault();
+        $('.wenwen_text').css('background','#c1c1c1');
+        $('.wenwen_text span').css('color','#fff');
+        $('.saying').show();
+    }
+
+    function _touch_end(event){
+        event.preventDefault();
+        $('.wenwen_text').css('background','#fff');
+        $('.wenwen_text .circle-button').css('color','#666');
+        $('.saying').hide();
+        var str  = '<div class="question">';
+	        str += '<div class="heard_img right"><img src="images/dglvyou.jpg"></div>';
+	        str += '<div class="question_text clear"><p>不好意思，我听不清！</p><i></i>';
+	        str += '</div></div>';
+		$('.speak_box').append(str);
+		for_bottom();
+        setTimeout(function(){
+        	var ans  = '<div class="answer"><div class="heard_img left"><img src="/static/images/dglvyou.jpg"></div>';
+	        	ans += '<div class="answer_text"><p>我不知道你在说什么?</p><i></i>';
+	    		ans += '</div></div>';
+	    	$('.speak_box').append(ans);
+			for_bottom();
+        },1000);
+    }
+
+    wen.addEventListener("touchstart", _touch_start, false);
+    wen.addEventListener("touchend", _touch_end, false);
+    
+    function for_bottom(){
+		var speak_height = $('.speak_box').height();
+		$('.speak_box,.speak_window').animate({scrollTop:speak_height},500);
+	}
+	
+	function autoWidth(){
+		$('.question_text').css('max-width',$('.question').width()-60);
+	}
+	autoWidth();
+    $(function () {
+		connect();
+    });
+</script>
+</body>
+</html>
+

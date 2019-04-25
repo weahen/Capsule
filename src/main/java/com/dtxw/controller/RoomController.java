@@ -90,13 +90,14 @@ public class RoomController {
     @RequestMapping("/ioschat")
     public String IOSH5()
     {
-        return "chat1";
+        return "IOSChatRoom";
     }
 
     @RequestMapping(value = "/getrooom",method = RequestMethod.POST)
     @ResponseBody
     public List<room> getRooomList(@RequestParam String mac)
     {
+        System.out.println("Recieved Request");
         return roomMapper.selectByMac(mac);
     }
 }
