@@ -97,7 +97,12 @@ public class RoomController {
     @ResponseBody
     public List<room> getRooomList(@RequestParam String mac)
     {
-        System.out.println("Recieved Request");
-        return roomMapper.selectByMac(mac);
+        String s=mac;
+        if(mac.contains(":"))
+        {
+            s = mac.toUpperCase().replace(":","-");
+        }
+        System.out.println("Recieved Request"+s);
+        return roomMapper.selectByMac(s);
     }
 }
