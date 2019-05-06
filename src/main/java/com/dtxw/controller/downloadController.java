@@ -1,6 +1,7 @@
 package com.dtxw.controller;
 
 import org.hibernate.validator.internal.util.privilegedactions.GetResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,26 +19,29 @@ public class downloadController {
         httpServletResponse.setHeader("Content-Disposition","attachment;filename="+filename);
 
         byte[] buffer = new byte[1024];
-        BufferedInputStream bufferedInputStream =null;
+//        BufferedInputStream bufferedInputStream =null;
+        InputStream inputStream = null;
         OutputStream outputStream = null;
         try {
             outputStream = httpServletResponse.getOutputStream();
-            String path = GetResource.class.getClassLoader().getResource("capsule.apk").getPath();
-            System.out.println(path);
-            bufferedInputStream = new BufferedInputStream(new FileInputStream(new File(path)));
-            int i = bufferedInputStream.read(buffer);
+            ClassPathResource classPathResource = new ClassPathResource("capsule.apk");
+//            String path = GetResource.class.getClassLoader().getResource("capsule.apk").getPath();
+//            System.out.println(path);
+//            bufferedInputStream = new BufferedInputStream(new FileInputStream(path));
+            inputStream = classPathResource.getInputStream();
+            int i = inputStream.read(buffer);
             while (i!=-1)
             {
-                outputStream.write(buffer,0,buffer.length);
+                outputStream.write(buffer,0,i);
                 outputStream.flush();
-                i = bufferedInputStream.read(buffer);
+                i = inputStream.read(buffer);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            if(bufferedInputStream!=null)
+            if(inputStream!=null)
             {
-                bufferedInputStream.close();
+                inputStream.close();
             }
         }
 
