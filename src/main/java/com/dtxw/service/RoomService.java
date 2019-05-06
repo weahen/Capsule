@@ -1,6 +1,7 @@
 package com.dtxw.service;
 
 import com.dtxw.entity.room;
+import com.dtxw.mapper.RoomManagerMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.AddRoomInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,6 @@ public class RoomService {
         else
             return false;
     }
+
+
 }

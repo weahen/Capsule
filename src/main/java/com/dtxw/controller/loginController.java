@@ -54,12 +54,7 @@ public class loginController {
         }
     }
 
-    @RequestMapping("/regist")
-    public String Regist(Model model)
-    {
-        model.addAttribute("registInfo",new RegistInfo());
-        return "manage/register";
-    }
+
 
     @RequestMapping(value = "/addChatRoom",method = RequestMethod.POST)
     public String AddChatRoom(@ModelAttribute AddRoomInfo addRoomInfo,Model model)

@@ -6,17 +6,6 @@
 		<script type="text/javascript" th:src="@{'/js/manage/jquery'+'-3.3.1.min.js'}"></script>
 		<script type="text/javascript" th:src="@{/js/manage/chat.js}"></script>
 		<script type="text/javascript" th:src="@{/js/manage/bootstrap.min.js}"></script>
-		<script type="text/javascript">
-			function showData(data) {
-			var str = "";//定义用于拼接的字符串
-			for (var i = 0; i < data.length; i++) {
-              //拼接表格的行和列
-			  str = "<tr><td>" + data[i].ID + "</td><td>" + data[i].path + "</td><td>" + data[i].name+"</td></tr>";
-              //追加到table中
-              $("#tab").append(str);         
-			  };
-			};
-		</script>
 		<title></title>
 	</head>
 	<body>

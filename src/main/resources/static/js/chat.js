@@ -11,6 +11,7 @@ function connect() {
         path = $("#RoomSelector").val();
         console.log('connected'+frame);
         stompClient.subscribe('/chat'+path);
+            stompClient.subscribe('/chat/1091728760')
  //       stompClient.send('/app/chatroom',{},JSON.stringify({'content':path}));
 
 
