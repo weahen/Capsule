@@ -4,8 +4,13 @@ package com.dtxw.entity;
 public class Fieldtomac {
 
   private String mac;
-  private String field;
+  private int field;
 
+public Fieldtomac(String Mac,int Field)
+{
+  this.mac=Mac;
+  this.field = Field;
+}
 
   public String getMac() {
     return mac;
@@ -16,11 +21,11 @@ public class Fieldtomac {
   }
 
 
-  public String getField() {
+  public int getField() {
     return field;
   }
 
-  public void setField(String field) {
+  public void setField(int field) {
     this.field = field;
   }
 

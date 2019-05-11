@@ -3,9 +3,13 @@ package com.dtxw.entity;
 public class Locationtofield {
 
   private String location;
-  private String field;
+  private int field;
 
-
+public Locationtofield(String L,int F)
+{
+  this.field = F;
+  this.location = L;
+}
   public String getLocation() {
     return location;
   }
@@ -15,11 +19,11 @@ public class Locationtofield {
   }
 
 
-  public String getField() {
+  public int getField() {
     return field;
   }
 
-  public void setField(String field) {
+  public void setField(int field) {
     this.field = field;
   }
 

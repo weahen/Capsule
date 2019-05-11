@@ -25,7 +25,7 @@
 	.wenwen-footer{width:100%;position:fixed;bottom:0px;left:0;background:#fff;padding:3%;border-top:solid 1px #ddd;box-sizing:border-box;}
 	.wenwen_btn,.wenwen_help{width:15%;text-align:center;}
 	.wenwen_btn img,.wenwen_help img{height:27px;}
-	.wenwen_text{height:29px;border-radius:5px;border:solid 1px #636162;box-sizing:border-box;width:66%;text-align:center;overflow:hidden;margin-left:2%;}
+	.wenwen_text{height:29px;border-radius:5px;border:solid 1px #636162;box-sizing:border-box;width:80%;text-align:center;overflow:hidden;margin-left:2%;}
 	.circle-button{padding:0 5px;}
 	.wenwen_text .circle-button{font-size:13px;color:#666;line-height:29px;}
 	.write_box{background:#fff;width:100%;height:40px;line-height:40px;display:none;}
@@ -76,7 +76,8 @@
 	<img th:src="@{images/saying.gif}">
 </div>
 <div class="wenwen-footer">
-	<div class="wenwen_btn left" onClick="to_write()"><img th:src="@{images/jp_btn.png}"></div>
+	<!--
+	v>-->
 	<div class="wenwen_text left">
 	    <div class="write_box">
 	        <input type="text" class="left" onKeyUp="keyup()" placeholder="请输入关键字" />
@@ -95,6 +96,7 @@
 </div>
 <script type="text/javascript" th:src="@{js/manage/jquery-3.3.1.min.js}"></script>
 <script type="text/javascript">
+	to_write();
     var stompClient = null;
     function connect() {
         var socket = new SockJS('/endpoint-websocket');

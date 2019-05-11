@@ -1,31 +1,24 @@
 package com.dtxw.controller;
 
 
+import com.dtxw.entity.Fieldtomac;
+import com.dtxw.entity.Locationtofield;
 import com.dtxw.entity.room;
+import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.InMessage;
 import com.dtxw.service.ChatService;
-import com.mysql.cj.xdevapi.JsonArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
-
-import static com.mysql.cj.xdevapi.Type.JSON;
 
 @Controller
 public class RoomController {
@@ -33,6 +26,8 @@ public class RoomController {
     RoomMapper roomMapper;
     @Autowired
     ChatService chatService;
+    @Autowired
+    LocationMapper locationMapper;
     public final static Logger messageLogger = LoggerFactory.getLogger("messageLOG") ;
 //    @ResponseBody
 //    @RequestMapping("/query")
@@ -103,6 +98,35 @@ public class RoomController {
             s = mac.toUpperCase().replace(":","-");
         }
         System.out.println("Recieved Request"+s);
-        return roomMapper.selectByMac(s);
+//        return roomMapper.selectByMac(s);
+        return roomMapper.getAllRoom();
     }
+
+    @RequestMapping(value = "/getFieldId")
+    @ResponseBody
+    public int getFieldId()
+    {
+        System.out.println("Request FID");
+        return locationMapper.getAll().size();
+
+    }
+
+    @RequestMapping(value = "/addFieldId" ,method = RequestMethod.GET)
+    @ResponseBody
+    public int addFieldId(String MAC,int FIELDID)
+    {
+
+        System.out.println("ADD MAC");
+           return locationMapper.addMAC(new Fieldtomac(MAC,FIELDID));
+
+    }
+
+    @RequestMapping(value = "/addLocation",method = RequestMethod.GET)
+    @ResponseBody
+    public int addLocation(String Location,int FIELDID)
+    {
+        System.out.println("ADD LOCATION");
+        return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
+    }
+
 }
