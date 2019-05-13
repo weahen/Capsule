@@ -20,4 +20,7 @@ public interface LocationMapper {
 
     @Insert("insert into locationtofield(LOCATION,FIELD) values (#{location},#{field})")
     int addLocation(Locationtofield locationtofield);
+
+    @Select("select * from fieldtomac where FIELD=#{id}")
+    List<Fieldtomac> selectFieldtomacById(int id);
 }

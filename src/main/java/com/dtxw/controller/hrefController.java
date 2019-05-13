@@ -21,4 +21,12 @@ public class hrefController {
         model.addAttribute("access",new AccessField());
         return "manage/updateRoom";
     }
+
+    @RequestMapping("/")
+    public String V()
+    {
+        return "manage/login";
+    }
+
+
 }
