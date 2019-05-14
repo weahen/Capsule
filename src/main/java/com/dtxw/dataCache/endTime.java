@@ -1,8 +1,10 @@
 package com.dtxw.dataCache;
 
-import java.util.Map;
+import com.dtxw.entity.room;
+
+import java.util.List;
 
 public class endTime {
-    public static Map<String,String> endTimeSchedule;
+    public static List<room> timer;
 
 }

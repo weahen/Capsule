@@ -2,11 +2,17 @@ package com.dtxw.controller;
 
 import com.dtxw.entity.Fieldtomac;
 import com.dtxw.entity.Locationtofield;
+import com.dtxw.job.AlertEnd;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomManagerMapper;
 import com.dtxw.model.AddRoomInfo;
 import com.dtxw.model.LoginInfo;
 import com.dtxw.service.RoomService;
+import com.dtxw.service.TimeService;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +20,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 
 @Controller
 public class loginController {
@@ -58,8 +72,7 @@ public class loginController {
 
 
     @RequestMapping(value = "/addChatRoom",method = RequestMethod.POST)
-    public String AddChatRoom(@ModelAttribute AddRoomInfo addRoomInfo,Model model)
-    {
+    public String AddChatRoom(@ModelAttribute AddRoomInfo addRoomInfo,Model model) throws ParseException, SchedulerException {
         int index = locationMapper.getAll().size()+1;
         String t = addRoomInfo.getField();
         String fieldGroup = t.substring(0,t.length()-1);
@@ -70,6 +83,17 @@ public class loginController {
             s = addRoomInfo.getLocation();
             addRoomInfo.setLocation(s.substring(0,s.length()-1));
             roomService.addRoom(addRoomInfo);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date date = dateFormat.parse(addRoomInfo.getE_time());
+            Trigger trigger =newTrigger().startAt(date).build();
+            JobDetail job = newJob().ofType(AlertEnd.class).build();
+            JobDataMap jobDataMap = job.getJobDataMap();
+            jobDataMap.put("Room_Path","/"+addRoomInfo.getName().hashCode());
+            jobDataMap.put("End_Time",addRoomInfo.getE_time());
+            jobDataMap.put("Room_Name",addRoomInfo.getName());
+            TimeService.scheduler.start();
+            TimeService.scheduler.scheduleJob(job,trigger);
+
         }
         else
         {
@@ -90,6 +114,15 @@ public class loginController {
             locationMapper.addLocation(new Locationtofield(addRoomInfo.getLocation(),index));
             addRoomInfo.setField(String.valueOf(index));
             roomService.addRoom(addRoomInfo);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date date = dateFormat.parse(addRoomInfo.getE_time());
+            Trigger trigger =newTrigger().startAt(date).build();
+            JobDetail job = newJob().ofType(AlertEnd.class).build();
+            JobDataMap jobDataMap = job.getJobDataMap();
+            jobDataMap.put("Room_Path",addRoomInfo.getName().hashCode());
+            jobDataMap.put("End_Time",addRoomInfo.getE_time());
+            jobDataMap.put("Room_Name",addRoomInfo.getName());
+            TimeService.scheduler.scheduleJob(job,trigger);
         }
 
 

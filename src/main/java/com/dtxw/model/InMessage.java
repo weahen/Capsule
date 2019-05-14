@@ -1,7 +1,5 @@
 package com.dtxw.model;
 
-import java.sql.Date;
-
 public class InMessage {
 
     private String uid; //用户ID 哈希生成
@@ -14,6 +12,11 @@ public class InMessage {
 
     public InMessage(){}
 
+    public InMessage(String uid, String path, String content) {
+        this.uid = uid;
+        this.path = path;
+        this.content = content;
+    }
 
     public String getUid() {
         return uid;

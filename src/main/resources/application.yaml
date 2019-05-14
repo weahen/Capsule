@@ -4,6 +4,8 @@ spring:
     password: 773757315
     url: jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+  quartz:
+    job-store-type: memory
 
 
 #server:

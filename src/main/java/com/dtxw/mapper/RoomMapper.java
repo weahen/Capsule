@@ -30,5 +30,7 @@ public interface RoomMapper {
     @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
     List<room> selectByMac(String mac);
 
+    @Select("SELECT * FROM room WHERE END_TIME>NOW();")
+    List<room> getEndTime();
 
 }
