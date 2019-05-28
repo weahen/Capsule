@@ -54,17 +54,19 @@ public class loginController {
 //        }
 //    }
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-    public String ManagerLogin(@ModelAttribute LoginInfo loginInfo,Model model)
+    public String ManagerLogin(@ModelAttribute LoginInfo loginInfo, Model model)
     {
         System.out.println(loginInfo.getID()+loginInfo.getPSW());
 
         model.addAttribute("loginInfo",loginInfo);
         if(roomManagerMapper.getRoomManagerByName(loginInfo.getID()).getPassword().equals(loginInfo.getPSW()))
         {
+
             return "manage/backgroundSystem";
         }
         else
         {
+            loginInfo.setID("Login Error!");
             return "manage/login";
         }
     }

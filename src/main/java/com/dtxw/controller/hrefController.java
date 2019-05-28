@@ -1,6 +1,7 @@
 package com.dtxw.controller;
 
 import com.dtxw.model.AccessField;
+import com.dtxw.model.LoginInfo;
 import com.dtxw.model.RegistInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +24,16 @@ public class hrefController {
     }
 
     @RequestMapping("/")
-    public String V()
+    public String V(Model model)
     {
+        model.addAttribute("loginInfo",new LoginInfo());
         return "manage/login";
+    }
+
+    @RequestMapping(value = "/report")
+    public void HandleReport(String s)
+    {
+
     }
 
 

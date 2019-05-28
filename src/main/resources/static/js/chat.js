@@ -20,7 +20,7 @@ function connect() {
 }
 
 function sendmessage() {
-    stompClient.send('/app/chatroom'+path,{},JSON.stringify({'content':$("#textarea").val(),'path':path,}));
+    stompClient.send('/app/chatroom'+path,{},JSON.stringify({'content':$("#textarea").val(),'path':path,'uid':"0"}));
     //console.log("send to : "+'/app/chat'+path);
 }
 

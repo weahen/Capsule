@@ -48,7 +48,9 @@
 			
 			<div id="line">
 			</div>
+
 			<div id="box1">
+				<p style="color: red" th:text="${loginInfo.getID()}" th:if="${not #strings.isEmpty(loginInfo.getID())} "></p>
 				<form  class="skform" th:action="@{/login}" th:object="${loginInfo}" method="post">
 					<p>
 						<label for="username">管理员ID：</label>
