@@ -19,6 +19,7 @@ public class manageController {
     @RequestMapping(value = "/addroom",method = RequestMethod.POST)
     public String addRoom(Model model, HttpSession httpSession,@ModelAttribute LoginInfo loginInfo){
         httpSession.setAttribute("loginInfo",loginInfo);
+        httpSession.getAttribute("loginInfo");
         httpSession.setAttribute("LocationList",locationMapper.getAll());
         model.addAttribute("addRoomInfo",new AddRoomInfo());
         return "manage/addRoom";

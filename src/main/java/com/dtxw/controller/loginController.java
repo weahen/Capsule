@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,10 +55,10 @@ public class loginController {
 //        }
 //    }
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-    public String ManagerLogin(@ModelAttribute LoginInfo loginInfo, Model model)
+    public String ManagerLogin(@ModelAttribute LoginInfo loginInfo, Model model, HttpSession httpSession)
     {
         System.out.println(loginInfo.getID()+loginInfo.getPSW());
-
+        httpSession.setAttribute("loginInfo",loginInfo);
         model.addAttribute("loginInfo",loginInfo);
         if(roomManagerMapper.getRoomManagerByName(loginInfo.getID()).getPassword().equals(loginInfo.getPSW()))
         {

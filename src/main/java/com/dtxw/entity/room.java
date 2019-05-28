@@ -11,6 +11,7 @@ public class room {
     private String START_TIME;
     private  String END_TIME;
     private String LOCATION;
+    private int RESERVE;
 
     public room(AddRoomInfo addRoomInfo) {
         this.NAME = addRoomInfo.getName();
@@ -20,10 +21,19 @@ public class room {
         int a = NAME.hashCode();
         this.PATH = "/"+a;
         this.LOCATION = addRoomInfo.getLocation();
+        this.RESERVE = addRoomInfo.getRESERVE();
     }
     public room()
     {
 
+    }
+
+    public int getRESERVE() {
+        return RESERVE;
+    }
+
+    public void setRESERVE(int RESERVE) {
+        this.RESERVE = RESERVE;
     }
 
     public String getLOCATION() {

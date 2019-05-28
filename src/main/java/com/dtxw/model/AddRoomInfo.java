@@ -6,6 +6,15 @@ public class AddRoomInfo {
     private String s_time;
     private String e_time;
     private String location;
+    private int RESERVE;
+
+    public int getRESERVE() {
+        return RESERVE;
+    }
+
+    public void setRESERVE(int RESERVE) {
+        this.RESERVE = RESERVE;
+    }
 
     public String getName() {
         return name;

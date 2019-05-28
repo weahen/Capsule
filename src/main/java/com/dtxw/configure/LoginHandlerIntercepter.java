@@ -11,8 +11,10 @@ public class LoginHandlerIntercepter implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         Object login = request.getSession().getAttribute("loginInfo");
+        System.out.println("进入拦截器");
         if (login==null)
         {
+            System.out.println("拦截成功");
             return false;
         }
         else

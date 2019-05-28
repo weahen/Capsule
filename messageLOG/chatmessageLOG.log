@@ -1,4 +1,1 @@
-SEND --- uid = '[null]   name ='[null]   path ='[/-547811592]   time ='[null]   id =[0]   content ='[lalala]
-RECV --- uid = '[null]   name ='[null]   path ='[/-547811592]   time ='[null]   id =[0]   mac ='[null]   content ='[lalala]
-SEND --- uid = '[0]   name ='[null]   path ='[/3079674]   time ='[null]   id =[0]   content ='[Room Closed at2019-05-14 15:54:55]
-SEND --- uid = '[0]   name ='[null]   path ='[/92567585]   time ='[null]   id =[0]   content ='[Room Closed at2019-05-14 16:25:20]
+SEND --- uid = '[0]   name ='[null]   path ='[/-1096256116]   time ='[null]   id =[0]   content ='[Room Closed at2019-05-28 15:52:45]
