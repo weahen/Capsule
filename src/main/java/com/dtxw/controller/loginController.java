@@ -2,6 +2,8 @@ package com.dtxw.controller;
 
 import com.dtxw.entity.Fieldtomac;
 import com.dtxw.entity.Locationtofield;
+import com.dtxw.entity.Reserve;
+import com.dtxw.entity.Reserve_Multiple;
 import com.dtxw.job.AlertEnd;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomManagerMapper;
@@ -128,6 +130,31 @@ public class loginController {
             TimeService.scheduler.scheduleJob(job,trigger);
         }
 
+        if (addRoomInfo.getRESERVE()==2)
+        {
+            Reserve_Multiple reserve_multiple = new Reserve_Multiple();
+            reserve_multiple.setPATH("/"+String.valueOf(addRoomInfo.getName().hashCode()));
+            reserve_multiple.setCURRENT_NO(0);
+            reserve_multiple.setTOTAL_NO(0);
+            reserve_multiple.setTYPE(addRoomInfo.getRESERVE());
+            reserve_multiple.setNAME(addRoomInfo.getName());
+            reserve_multiple.setTYPE_2(0);
+            reserve_multiple.setTYPE_4(0);
+            reserve_multiple.setTYPE_6(0);
+            reserve_multiple.setTYPE_8(0);
+            reserve_multiple.setTYPE_MORE(0);
+            roomService.addMultipleReserve(reserve_multiple);
+        }
+        else
+        {
+            Reserve reserve = new Reserve();
+            reserve.setCURRENT_No(0);
+            reserve.setTOTAL_No(0);
+            reserve.setNAME(addRoomInfo.getName());
+            reserve.setTYPE(addRoomInfo.getRESERVE());
+            reserve.setPATH("/"+String.valueOf(addRoomInfo.getName().hashCode()));
+            roomService.addReserve(reserve);
+        }
 
         model.addAttribute("addRoomInfo",new AddRoomInfo());
         System.out.println(addRoomInfo.getName());

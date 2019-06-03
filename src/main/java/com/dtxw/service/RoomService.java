@@ -1,9 +1,10 @@
 package com.dtxw.service;
 
+import com.dtxw.entity.Reserve_Multiple;
 import com.dtxw.entity.room;
-import com.dtxw.mapper.RoomManagerMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.AddRoomInfo;
+import com.dtxw.entity.Reserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,14 @@ public class RoomService {
             return false;
     }
 
+    public void addReserve(Reserve reserveInfo)
+    {
+        roomMapper.addReserve(reserveInfo);
+    }
+
+    public void addMultipleReserve(Reserve_Multiple multiple)
+    {
+        roomMapper.addMultipleReserve(multiple);
+    }
 
 }
