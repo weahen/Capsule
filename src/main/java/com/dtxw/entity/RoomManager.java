@@ -52,4 +52,14 @@ public class RoomManager {
     this.description = description;
   }
 
+  @Override
+  public String toString() {
+    return "RoomManager{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", password='" + password + '\'' +
+            ", description='" + description + '\'' +
+            ", email='" + email + '\'' +
+            '}';
+  }
 }

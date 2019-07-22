@@ -1,9 +1,6 @@
 package com.dtxw.controller;
 
-import com.dtxw.entity.Fieldtomac;
-import com.dtxw.entity.Locationtofield;
-import com.dtxw.entity.Reserve;
-import com.dtxw.entity.Reserve_Multiple;
+import com.dtxw.entity.*;
 import com.dtxw.job.AlertEnd;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomManagerMapper;
@@ -21,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
@@ -74,6 +72,22 @@ public class loginController {
         }
     }
 
+    @RequestMapping(value = "/loginAPP",method = RequestMethod.POST)
+    @ResponseBody
+    public RoomManager AppLogin(String ID,String PSW)
+    {
+        if(roomManagerMapper.getRoomManagerByName(ID).getPassword().equals(PSW))
+        {
+            System.out.println("RECV"+ID+"     "+PSW);
+            return roomManagerMapper.getRoomManagerByName(ID);
+
+        }
+        else
+        {
+            System.out.println("RECV ERROR"+ID+"     "+PSW);
+            return new RoomManager();
+        }
+    }
 
 
     @RequestMapping(value = "/addChatRoom",method = RequestMethod.POST)
