@@ -3,6 +3,7 @@ package com.dtxw.mapper;
 import com.dtxw.entity.Reserve;
 import com.dtxw.entity.Reserve_Multiple;
 import com.dtxw.entity.room;
+import com.dtxw.entity.room_shotcut;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -56,5 +57,8 @@ public interface RoomMapper {
 
     @Update("update RESERVE_MULTIPLE set TOTAL_NO=#{reserve_multiple.TOTAL_NO},CURRENT_NO=#{reserve_multiple.CURRENT_NO},TYPE_2=#{reserve_multiple.TYPE_2},TYPE_4=#{reserve_multiple.TYPE_4},TYPE_6=#{reserve_multiple.TYPE_6},TYPE_8=#{reserve_multiple.TYPE_8},TYPE_MORE=#{reserve_multiple.TYPE_MORE} where PATH=#{path}")
     int updateMultipleReserve(Reserve_Multiple reserve_multiple,String path);
+
+    @Select("select room_name,room_path from Unitroom where location=#{location}")
+    List<room_shotcut> getUnitRoom(String location);
 
 }

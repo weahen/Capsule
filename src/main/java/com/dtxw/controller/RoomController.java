@@ -4,6 +4,7 @@ package com.dtxw.controller;
 import com.dtxw.entity.Fieldtomac;
 import com.dtxw.entity.Locationtofield;
 import com.dtxw.entity.room;
+import com.dtxw.entity.room_shotcut;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.InMessage;
@@ -130,6 +131,13 @@ public class RoomController {
     {
         System.out.println("ADD LOCATION");
         return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
+    }
+
+    @RequestMapping(value = "/getUnitInfo",method = RequestMethod.POST)
+    @ResponseBody
+    public List<room_shotcut> getUnitInfo(String location)
+    {
+        return roomMapper.getUnitRoom(location);
     }
 
 }
