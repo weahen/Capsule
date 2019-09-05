@@ -31,7 +31,7 @@ public interface RoomMapper {
     @Insert("insert into Room(NAME,PATH,FIELD,START_TIME,END_TIME,LOCATION,RESERVE) values (#{NAME},#{PATH},#{FIELD},#{START_TIME},#{END_TIME},#{LOCATION},#{RESERVE})")
     int addRoom(room r);
 
-    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
+    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION,RESERVE FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
     List<room> selectByMac(String mac);
 
     @Select("SELECT * FROM room WHERE END_TIME>NOW();")
@@ -60,5 +60,7 @@ public interface RoomMapper {
 
     @Select("select room_name,room_path from Unitroom where location=#{location}")
     List<room_shotcut> getUnitRoom(String location);
+    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM room where END_TIME=#{field}")
+    room selectByUnitMac(String field);
 
 }

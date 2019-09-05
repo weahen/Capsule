@@ -28,6 +28,13 @@ public class room {
 
     }
 
+    public room(String NAME, String START_TIME) {
+        this.NAME = NAME;
+        this.START_TIME = START_TIME;
+        this.LOCATION = NAME+"_unit";
+        this.PATH = "/";
+    }
+
     public int getRESERVE() {
         return RESERVE;
     }

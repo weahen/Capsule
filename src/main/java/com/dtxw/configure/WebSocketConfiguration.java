@@ -1,6 +1,5 @@
 package com.dtxw.configure;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.concurrent.DefaultManagedTaskScheduler;
@@ -27,5 +26,6 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
 
     }
+
 
 }

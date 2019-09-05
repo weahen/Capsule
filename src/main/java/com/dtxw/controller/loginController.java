@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -116,19 +117,33 @@ public class loginController {
         }
         else
         {
-
+            List<Fieldtomac> temp = new ArrayList<>();
+            List<Fieldtomac> temp1 = new ArrayList<>();
             String fg[] = fieldGroup.split(",");
             for(int i=0;i<fg.length;i++)
             {
                 if(fg[i]!=null)
                 {
                     List<Fieldtomac> list = locationMapper.selectFieldtomacById(Integer.parseInt(fg[i]));
-                    for(int j=0;j<list.size();j++)
-                    {
-                        locationMapper.addMAC(new Fieldtomac(list.get(j).getMac(),index));
-                    }
+                    temp.addAll(list);
 
                 }
+            }
+            temp1.add(temp.get(0));
+            for(int j=0;j<temp.size();j++)
+            {
+                for (int i=0;i<temp1.size();i++)
+                {
+                    if (!temp.get(j).getMac().equals(temp1.get(i).getMac()))
+                    {
+                        temp1.add(temp.get(j));
+                    }
+                }
+            }
+
+            for(int j=0;j<temp1.size();j++)
+            {
+                locationMapper.addMAC(new Fieldtomac(temp1.get(j).getMac(),index));
             }
             locationMapper.addLocation(new Locationtofield(addRoomInfo.getLocation(),index));
             addRoomInfo.setField(String.valueOf(index));

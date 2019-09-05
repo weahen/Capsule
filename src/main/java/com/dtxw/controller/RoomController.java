@@ -102,8 +102,18 @@ public class RoomController {
             s = mac.toUpperCase().replace(":","-");
         }
         System.out.println("Recieved Request"+s);
-//        return roomMapper.selectByMac(s);
-        return roomMapper.getAllRoom();
+        List<room> temp = roomMapper.selectByMac(s);
+        if (temp.size()==0)
+            return null;
+        else
+        {
+            String t = temp.get(0).getFIELD();
+            temp.add(roomMapper.selectByUnitMac("0"));
+            return temp;
+        }
+
+
+
     }
 
     @RequestMapping(value = "/getFieldId")
@@ -137,7 +147,22 @@ public class RoomController {
     @ResponseBody
     public List<room_shotcut> getUnitInfo(String location)
     {
+        System.out.println("Received Location"+location);
         return roomMapper.getUnitRoom(location);
     }
+
+    @RequestMapping(value = "/getLocationMacList",method = RequestMethod.POST)
+    @ResponseBody
+    public List<String> getLocationMacList(int fieldID)
+    {
+        return locationMapper.selectMacById(fieldID);
+    }
+//    @RequestMapping(value = "/addUnitRoom",method = RequestMethod.GET)
+//    @ResponseBody
+//    public int addUnitRoom(String Location,int FIELDID)
+//    {
+//        System.out.println("UINT_ROOM");
+//        return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
+//    }
 
 }

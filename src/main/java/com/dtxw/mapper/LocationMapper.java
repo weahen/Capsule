@@ -23,4 +23,9 @@ public interface LocationMapper {
 
     @Select("select * from fieldtomac where FIELD=#{id}")
     List<Fieldtomac> selectFieldtomacById(int id);
+
+    @Select("select MAC from fieldtomac where FIELD=#{id}")
+    List<String> selectMacById(int id);
+
+
 }
