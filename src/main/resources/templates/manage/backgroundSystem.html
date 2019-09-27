@@ -27,8 +27,11 @@
                    data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">新增</a>
             </div>
             <div title="管理" data-options="iconCls:'icon-bkgl'" style="padding:10px;">
-                <a href="viewAllRoom" class="easyui-linkbutton"
-                   data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">查看聊天室</a>
+				<form  class="skform" th:action="@{/viewAllRoom}" th:object="${loginInfo}" method="post">
+					<input type="hidden" th:value="${loginInfo.getID()}" th:field="*{ID}">
+					<input type="hidden" th:value="${loginInfo.getFIELD()}" th:field="*{FIELD}">
+					<input type="submit" value="删除聊天室" data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">
+				</form>
 				<form  class="skform" th:action="@{/addroom}" th:object="${loginInfo}" method="post">
 					<input type="hidden" th:value="${loginInfo.getID()}" th:field="*{ID}">
 					<input type="submit" value="添加聊天室" data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">
@@ -38,6 +41,7 @@
 				   data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">管理员审批</a>
 				<form  class="skform" th:action="@{/addroom}" th:object="${loginInfo}" method="post">
 					<input type="hidden" th:value="${loginInfo.getID()}" th:field="*{ID}">
+					<input type="hidden" th:value="${loginInfo.getFIELD()}" th:field="*{FIELD}">
 					<input type="submit" value="管理聊天室" data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">
 				</form>
             </div>

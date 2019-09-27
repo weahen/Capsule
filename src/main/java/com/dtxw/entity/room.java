@@ -35,6 +35,10 @@ public class room {
         this.PATH = "/";
     }
 
+    public room(String NAME) {
+        this.NAME = NAME;
+    }
+
     public int getRESERVE() {
         return RESERVE;
     }

@@ -8,6 +8,7 @@ import com.dtxw.entity.room_shotcut;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.InMessage;
+import com.dtxw.model.deleteID;
 import com.dtxw.service.ChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -169,4 +168,12 @@ public class RoomController {
 //        return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
 //    }
 
+    @RequestMapping(value = "/deleteRoom",method = RequestMethod.POST)
+    public String deleteRoom(@ModelAttribute deleteID delete, Model model)
+    {
+        int id = Integer.parseInt(delete.getId());
+        roomMapper.deleteRoomByID(id);
+        model.addAttribute("deleteID",new deleteID());
+        return "manage/chat_room";
+    }
 }

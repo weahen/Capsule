@@ -4,10 +4,7 @@ import com.dtxw.entity.Reserve;
 import com.dtxw.entity.Reserve_Multiple;
 import com.dtxw.entity.room;
 import com.dtxw.entity.room_shotcut;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +15,9 @@ public interface RoomMapper {
 
     @Select("select * from Room where ID=#{id}")
     room getRoomById(Integer id);
+
+    @Select("select * from Room where FIELD=#{field}")
+    List<room> getRoomByField(Integer field);
 
     @Select("select * from Room")
     List<room> getAllRoom();
@@ -62,5 +62,8 @@ public interface RoomMapper {
     List<room_shotcut> getUnitRoom(String location);
     @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION FROM room where END_TIME=#{field}")
     room selectByUnitMac(String field);
+
+    @Delete("delete from room where id=#{id}")
+    int deleteRoomByID(int id);
 
 }

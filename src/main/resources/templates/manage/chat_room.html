@@ -4,40 +4,35 @@
 		<meta charset="utf-8">
 	    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
 		<script type="text/javascript" th:src="@{'/js/manage/jquery'+'-3.3.1.min.js'}"></script>
-		<script type="text/javascript" th:src="@{/js/manage/chat.js}"></script>
+		<!--<script type="text/javascript" th:src="@{/js/manage/chat.js}"></script>-->
 		<script type="text/javascript" th:src="@{/js/manage/bootstrap.min.js}"></script>
 		<title></title>
 	</head>
 	<body>
 		<table class="table table-hover" id="tab">
-			<caption>RoomList</caption>
+			<caption>
+				<form th:action="@{/deleteRoom}" th:object="${deleteID}" th:method="POST">
+					<label>聊天室ID</label>
+					<input placeholder="请输入聊天室ID" style="width: 460px;height: 35px;border-radius: 6px;" th:field="*{id}">
+					<input type="submit" value="删除" style="margin-right: 430px;"/>
+				</form>
+			</caption>
+			</caption>
 			<thead>
 				<tr>
-				  <!-- <th>序号</th> -->
 				  <th>聊天室ID</th>
-				  <th>路径</th>
-				  <th>名称</th>
+				  <th>聊天室名称</th>
+				  <th>聊天室位置</th>
+				  <th>结束时间</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- <tr>
-				  <th>1</th>
-				  <td></td>
-				  <td></td>
-				  <td></td>
+				<tr th:each="room:${session.roomList}">
+					<td th:text="${room.getID()}"></td>
+					<td th:text="${room.getNAME()}"></td>
+					<td th:text="${room.getLOCATION()}"></td>
+					<td th:text="${room.getEND_TIME()}"></td>
 				</tr>
-				<tr>
-				  <th>2</th>
-				  <td></td>
-				  <td></td>
-				  <td></td>
-				</tr>
-				<tr>
-				  <th>3</th>
-				  <td></td>
-				  <td></td>
-				  <td></td>
-				</tr> -->
 			</tbody>
 		</table>
 	</body>

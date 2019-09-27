@@ -57,6 +57,8 @@ public class loginController {
     public String ManagerLogin(@ModelAttribute LoginInfo loginInfo, Model model, HttpSession httpSession)
     {
         System.out.println(loginInfo.getID()+loginInfo.getPSW());
+        RoomManager roomManager = roomManagerMapper.getRoomManagerByName(loginInfo.getID());
+        loginInfo.setFIELD(roomManager.getACCESSFIELD());
         httpSession.setAttribute("loginInfo",loginInfo);
         model.addAttribute("loginInfo",loginInfo);
         if(roomManagerMapper.getRoomManagerByName(loginInfo.getID()).getPassword().equals(loginInfo.getPSW()))

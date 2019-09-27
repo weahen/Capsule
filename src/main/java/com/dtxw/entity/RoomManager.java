@@ -8,6 +8,15 @@ public class RoomManager {
   private String password;
   private String description;
   private String email;
+  private String ACCESSFIELD;
+
+  public String getACCESSFIELD() {
+    return ACCESSFIELD;
+  }
+
+  public void setACCESSFIELD(String ACCESSFIELD) {
+    this.ACCESSFIELD = ACCESSFIELD;
+  }
 
   public String getEmail() {
     return email;

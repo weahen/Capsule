@@ -25,7 +25,7 @@ function showdata(data) {
     for (var i=0;i<data.length;i++)
     {
 
-        str = "<tr><td>"+data[i].name+"</td>"+"<td>"+data[i].path+"</td>"+"<td>"+data[i].id+"</td></tr>";
+        str = "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td>"+"<td>"+data[i].location+"</td>"+"<td>"+data[i].end_TIME+"</td></tr>";
         $("#tab").append(str);
         $("#tab").show();
     }
