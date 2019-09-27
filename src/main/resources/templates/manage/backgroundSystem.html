@@ -36,8 +36,10 @@
 				<!--<input type="submit" th:action="@{/addroom}" th:object="loginInfo" value="添加聊天室" data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">-->
 				<a href="audit" class="easyui-linkbutton"
 				   data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">管理员审批</a>
-				<a href="unitAddFunc" class="easyui-linkbutton"
-				   data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">管理聊天室</a>
+				<form  class="skform" th:action="@{/addroom}" th:object="${loginInfo}" method="post">
+					<input type="hidden" th:value="${loginInfo.getID()}" th:field="*{ID}">
+					<input type="submit" value="管理聊天室" data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">
+				</form>
             </div>
             <div title="类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
                 <a href="#" class="easyui-linkbutton"

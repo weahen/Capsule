@@ -121,7 +121,11 @@ public class RoomController {
     public int getFieldId()
     {
         System.out.println("Request FID");
-        return locationMapper.getAll().size();
+        Locationtofield locationtofield = locationMapper.getIndex();
+        if (locationtofield==null)
+            return 0;
+        else
+            return locationtofield.getField();
 
     }
 

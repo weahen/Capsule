@@ -1,4 +1,4 @@
-package com.dtxw.controller.controller;
+package com.dtxw.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

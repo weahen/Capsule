@@ -27,5 +27,8 @@ public interface LocationMapper {
     @Select("select MAC from fieldtomac where FIELD=#{id}")
     List<String> selectMacById(int id);
 
+    @Select("select  * from LocationToField order by FIELD DESC LIMIT 1")
+    Locationtofield getIndex();
+
 
 }

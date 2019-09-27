@@ -24,9 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -93,7 +91,12 @@ public class loginController {
 
     @RequestMapping(value = "/addChatRoom",method = RequestMethod.POST)
     public String AddChatRoom(@ModelAttribute AddRoomInfo addRoomInfo,Model model) throws ParseException, SchedulerException {
-        int index = locationMapper.getAll().size()+1;
+        int index;
+        Locationtofield locationtofield = locationMapper.getIndex();
+        if (locationtofield==null)
+            index = 1;
+        else
+            index = locationtofield.getField()+1;
         String t = addRoomInfo.getField();
         String fieldGroup = t.substring(0,t.length()-1);
         if (!fieldGroup.contains(","))
@@ -118,7 +121,7 @@ public class loginController {
         else
         {
             List<Fieldtomac> temp = new ArrayList<>();
-            List<Fieldtomac> temp1 = new ArrayList<>();
+            Map <String,Fieldtomac> temp1 = new HashMap<>();
             String fg[] = fieldGroup.split(",");
             for(int i=0;i<fg.length;i++)
             {
@@ -129,22 +132,32 @@ public class loginController {
 
                 }
             }
-            temp1.add(temp.get(0));
-            for(int j=0;j<temp.size();j++)
+            for (int i=0;i<temp.size();i++)
+                temp1.put(temp.get(i).getMac(),temp.get(i));
+//            temp1.add(temp.get(0));
+//            for(int j=0;j<temp.size();j++)
+//            {
+//                for (int i=0;i<temp1.size();i++)
+//                {
+//                    if (!temp.get(j).getMac().equals(temp1.get(i).getMac()))
+//                    {
+//                        temp1.add(temp.get(j));
+//                    }
+//                }
+//            }
+//
+//            for(int j=0;j<temp1.size();j++)
+//            {
+//                locationMapper.addMAC(new Fieldtomac(temp1.get(j).getMac(),index));
+//            }
+
+            Iterator iter = temp1.entrySet().iterator();
+            while(iter.hasNext())
             {
-                for (int i=0;i<temp1.size();i++)
-                {
-                    if (!temp.get(j).getMac().equals(temp1.get(i).getMac()))
-                    {
-                        temp1.add(temp.get(j));
-                    }
-                }
+                 Map.Entry<String,Fieldtomac> entry = (Map.Entry<String,Fieldtomac>)iter.next();
+                 locationMapper.addMAC(new Fieldtomac(entry.getKey(),index));
             }
 
-            for(int j=0;j<temp1.size();j++)
-            {
-                locationMapper.addMAC(new Fieldtomac(temp1.get(j).getMac(),index));
-            }
             locationMapper.addLocation(new Locationtofield(addRoomInfo.getLocation(),index));
             addRoomInfo.setField(String.valueOf(index));
             roomService.addRoom(addRoomInfo);
