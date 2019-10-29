@@ -1,5 +1,6 @@
 var stompClient = null;
 var path = null;
+var subscription = null;
 function connect() {
     var socket = new SockJS('/endpoint-websocket');
     stompClient = Stomp.over(socket);
@@ -10,8 +11,8 @@ function connect() {
  //       path = document.getElementById("RoomSelector");
         path = $("#RoomSelector").val();
         console.log('connected'+frame);
-        stompClient.subscribe('/chat'+path);
-            stompClient.subscribe('/chat/1091728760')
+        subscription = stompClient.subscribe('/chat'+path);
+
  //       stompClient.send('/app/chatroom',{},JSON.stringify({'content':path}));
 
 
@@ -24,10 +25,17 @@ function sendmessage() {
     //console.log("send to : "+'/app/chat'+path);
 }
 
+function disconnect() {
+    console.log('disconnected0');
+    subscription.unsubscribe();
+    console.log('disconnected');
+    stompClient.disconnect();
+}
 
 $(function () {
         $("#send").click(function () {sendmessage();});
         $("#connect").click(function () {connect();});
+        $("#disconnect").click(function () {disconnect();});
         
     }
 );

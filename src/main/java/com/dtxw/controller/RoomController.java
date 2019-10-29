@@ -82,7 +82,7 @@ public class RoomController {
     public void notification(StompHeaderAccessor stompHeaderAccessor)
     {
         String add = stompHeaderAccessor.getDestination();
-        System.out.println("订阅了 "+ add);
+
     }
 
     @RequestMapping("/ioschat")

@@ -40,6 +40,34 @@ public class ImgController {
         inputStream.close();
 
     }
+
+    @RequestMapping(value = "/GetImg/{name}",method = RequestMethod.GET)
+    public void downloadImg_GET(HttpServletResponse response,@PathVariable String name) throws IOException
+    {
+        String base = "c:/imgs/";
+        File file = new File(base+name);
+        response.setHeader("content-type","application/octet-stream");
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition","attachment;filename="+name);
+        response.setHeader("Content-Length",String.valueOf(file.length()));
+        byte[] buffer = new byte[1024];
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+
+        inputStream = new FileInputStream(file);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        outputStream =response.getOutputStream();
+        int flag = bufferedInputStream.read(buffer);
+        while (flag!=-1)
+        {
+            outputStream.write(buffer,0,flag);
+            outputStream.flush();
+            flag = bufferedInputStream.read(buffer);
+        }
+
+        inputStream.close();
+
+    }
     @RequestMapping(value = "/uploadImg/{name}",method = RequestMethod.POST)
     @ResponseBody
     public String uploadImg(HttpServletRequest httpServletRequest,@PathVariable String name) throws IOException {
