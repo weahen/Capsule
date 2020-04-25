@@ -9,7 +9,7 @@ public class InMessage {
     private String time;//时间
     private int id;//聊天室ID
     private String mac;//用户当前WiFi MAC
-
+    private String mid;
     public InMessage(){}
 
     public InMessage(String uid, String path, String content) {
@@ -74,6 +74,14 @@ public class InMessage {
         this.mac = mac;
     }
 
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
     @Override
     public String toString() {
         return "uid = '" + "["+uid +"]"+
@@ -82,7 +90,8 @@ public class InMessage {
                 "   time ='" + "["+time +"]"+
                 "   id =" + "["+id +"]"+
                 "   mac ='" +"["+ mac +"]"+
-                "   content ='" + "["+content +"]"
+                "   content ='" + "["+content +"]"+
+                "   mid ='" + "["+mid+"]"
                 ;
     }
 

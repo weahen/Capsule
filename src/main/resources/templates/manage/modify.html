@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+        <script type="text/javascript" th:src="@{js/manage/jquery-3.3.1.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/manage/jquery-ui.js}"></script>
+		<script type="text/javascript" th:src="@{js/manage/jquery-ui-timepicker-addon.js}"></script>
+		<script type="text/javascript" th:src="@{js/manage/jquery.ui.datepicker-zh-CN.js}"></script>
+        <link type="text/css" th:href="@{css/jquery-ui.css}" rel="stylesheet">
+        <link type="text/css" th:href="@{css/jquery-ui-timepicker-addon.css}" rel="stylesheet">
+		<title>修改聊天室</title>
+		<script> 
+		$(function(){
+		$("#FirstTime").datetimepicker({  
+					defaultDate: $('#FirstTime').val(),  
+					dateFormat: "yy-mm-dd",  
+					showSecond: true,  
+					timeFormat: 'HH:mm:ss',
+					stepHour: 1,  
+					stepMinute: 1,  
+					stepSecond: 1  
+			});
+			$("#LastTime").datetimepicker({  
+					defaultDate: $('#LastTime').val(),  
+					dateFormat: "yy-mm-dd",  
+					showSecond: true,  
+					timeFormat: 'HH:mm:ss',
+					stepHour: 1,  
+					stepMinute: 1,  
+					stepSecond: 1  
+			});
+
+			$("#LocationSelector").bind('input propertychange',function () {
+			    var a = $("#LocationSelector").find("option:selected").text();
+			    var b = $("#LocationSelector").val();
+			    var c = $("#field").val();
+			    var d = $("#location").val();
+			    if(c.indexOf(b)!=-1)
+                {
+                    var re = new RegExp(b+",","g");
+                    c=c.replace(re,"");
+                    var re1 = new RegExp(a+",","g")
+                    d=d.replace(re1,"");
+                }
+                else
+                {
+                    c=c+b+",";
+                    d=d+a+",";
+                }
+                $("#field").val(c);
+                $("#location").val(d);
+            });
+
+            $("#RoomSelector").bind('input propertychange',function () {
+                var b = $("#RoomSelector").val();
+                $("#roomName").val(b);
+                $("#orign_name").val(b)
+            });
+
+			$("#ReserveSelector").bind('input propertychange',function () {
+				var e = $("#ReserveSelector").val();
+				$("#RESERVE").val(e);
+            });
+		})
+		</script>
+		<style type="text/css">
+			#box{
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(to bottom,#cdddec,#faf9fe,#ffffff,#ffffff,#ffffff,#ffffff,#ffffff,#faf9fe,#cdddec);
+				position: absolute;
+			}
+			#box1{
+				width: 700px;
+				height: 400px;
+				/* border: 1px solid red; */
+				position: relative;
+				left: 26%;
+				top: 24%;
+				text-align: center;
+			}
+			#form1{
+				position: relative;
+				top: 200px;
+				left: 300px;
+			}
+				.s1{
+					width: 64px;
+					height: 31px;
+					font-size: 15px;
+					border-radius: 10px;
+				}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="box1">
+			<form class="form1" th:action="@{/modifyChatRoom}" th:object="${ModifyRoomInfo}" method="post" >
+				<div>
+					<label>聊天室选择：</label>
+					<select id="RoomSelector"  style="width: 460px;height: 35px;border-radius: 5px;" name="Field">
+						<option>Choose Room</option>
+						<option th:each="roomList:${session.RoomList}" th:value="${roomList.getNAME()}" th:text="${roomList.getNAME()}"  ></option>
+					</select>
+				</div><br>
+				<div>
+					<input id="orign_name" type="hidden"  style="width: 460px;height: 35px;border-radius: 5px;" th:field="*{orign}" readonly="true">
+				</div><br>
+			  <div>
+				<label>聊天室名称：</label>
+				  <input id="roomName" type="text" placeholder="请输入聊天室名称" style="width: 460px;height: 35px;border-radius: 6px;" th:field="*{name}">
+			  </div><br>
+			  <div>
+                  <label>聊天室选择：</label>
+                  <select id="LocationSelector"  style="width: 460px;height: 35px;border-radius: 5px;" name="Field">
+                      <option>Choose Location</option>
+                      <option th:each="LocationList:${session.LocationList}" th:value="${LocationList.getField()}" th:text="${LocationList.getLocation()}"  ></option>
+                  </select>
+			  </div><br>
+				<div>
+                <div>
+                <label>聊天室区域：</label>
+                <input  id="field" type="text"  style="width: 460px;height: 35px;border-radius: 5px;" th:field="*{field}" readonly="true">
+                </div><br>
+				<div>
+				<label>聊天室位置：</label>
+					<input id="location" type="text"  style="width: 460px;height: 35px;border-radius: 5px;" th:field="*{location}" readonly="true">
+				</div><br>
+				<div>
+					<label>取号功能：</label>
+					<select id="ReserveSelector"   style="width: 460px;height: 35px;border-radius: 5px;" >
+						<option>选择取号功能</option>
+						<option th:text="按桌型叫号" th:value="2"></option>
+						<option th:text="标准" th:value="1"></option>
+						<option th:text="否" th:value="0"></option>
+					</select>
+				</div><br>
+				<div>
+					<input id="RESERVE" type="hidden"  style="width: 460px;height: 35px;border-radius: 5px;" th:field="*{RESERVE}" readonly="true">
+				</div><br>
+				<div>
+				<label>请选择开始-截止时间：</label>
+					<input type="text" id="FirstTime" value="" style="margin-left: 10px;margin-right: 10px;width: 160px;" th:field="*{s_time}">
+					<span>--</span>
+					<input type="text" id="LastTime" value="" style="margin-left: 10px;width: 160px;" th:field="*{e_time}">
+				</div><br>
+			  <div>
+				<div>
+				  <input type="submit" class="s1" value="提交" style="margin-right: 430px;"/>
+				  <input type="reset" class="s1" value="重置" />
+
+				</div>
+			  </div>
+                </div>
+			</form>
+			</div>
+		</div>
+	</body>
+</html>

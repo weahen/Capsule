@@ -4,6 +4,7 @@ import com.dtxw.entity.Reserve;
 import com.dtxw.entity.Reserve_Multiple;
 import com.dtxw.entity.room;
 import com.dtxw.entity.room_shotcut;
+import com.dtxw.model.modify_to_room_info;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -65,5 +66,12 @@ public interface RoomMapper {
 
     @Delete("delete from room where id=#{id}")
     int deleteRoomByID(int id);
+
+    @Select("select version_code from version")
+    String getVersion_code();
+
+    @Update("update room set NAME=#{NAME},PATH=#{PATH},FIELD=#{FIELD},START_TIME=#{START_TIME},END_TIME=#{END_TIME},LOCATION=#{LOCATION},RESERVE=#{RESERVE} where NAME=#{orign}")
+    boolean modify(modify_to_room_info modifyRoomInfo);
+
 
 }

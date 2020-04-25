@@ -1,11 +1,13 @@
 package com.dtxw.controller;
 
+import com.dtxw.dataCache.onLine_User;
 import com.dtxw.entity.*;
 import com.dtxw.job.AlertEnd;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomManagerMapper;
 import com.dtxw.model.AddRoomInfo;
 import com.dtxw.model.LoginInfo;
+import com.dtxw.model.ModifyRoomInfo;
 import com.dtxw.service.RoomService;
 import com.dtxw.service.TimeService;
 import org.quartz.JobDataMap;
@@ -201,8 +203,110 @@ public class loginController {
         }
 
         model.addAttribute("addRoomInfo",new AddRoomInfo());
+        onLine_User.path_count.put("/chat/"+addRoomInfo.getName().hashCode(),0);
         System.out.println(addRoomInfo.getName());
         System.out.println(addRoomInfo.getLocation());
+        return "manage/addRoom";
+    }
+
+
+    @RequestMapping(value = "/modifyChatRoom",method = RequestMethod.POST)
+    public String ModifyChatRoom(@ModelAttribute ModifyRoomInfo modifyRoomInfo, Model model) throws ParseException, SchedulerException {
+        int index;
+        Locationtofield locationtofield = locationMapper.getIndex();
+        if (locationtofield==null)
+            index = 1;
+        else
+            index = locationtofield.getField()+1;
+        String t = modifyRoomInfo.getField();
+        String fieldGroup = t.substring(0,t.length()-1);
+        if (!fieldGroup.contains(","))
+        {
+            String s = modifyRoomInfo.getField();
+            modifyRoomInfo.setField(s.substring(0,s.length()-1));
+            s = modifyRoomInfo.getLocation();
+            modifyRoomInfo.setLocation(s.substring(0,s.length()-1));
+            roomService.modifyRoom(modifyRoomInfo);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date date = dateFormat.parse(modifyRoomInfo.getE_time());
+            Trigger trigger =newTrigger().startAt(date).build();
+            JobDetail job = newJob().ofType(AlertEnd.class).build();
+            JobDataMap jobDataMap = job.getJobDataMap();
+            jobDataMap.put("Room_Path","/"+modifyRoomInfo.getName().hashCode());
+            jobDataMap.put("End_Time",modifyRoomInfo.getE_time());
+            jobDataMap.put("Room_Name",modifyRoomInfo.getName());
+            TimeService.scheduler.start();
+            TimeService.scheduler.scheduleJob(job,trigger);
+
+        }
+        else
+        {
+            List<Fieldtomac> temp = new ArrayList<>();
+            Map <String,Fieldtomac> temp1 = new HashMap<>();
+            String fg[] = fieldGroup.split(",");
+            for(int i=0;i<fg.length;i++)
+            {
+                if(fg[i]!=null)
+                {
+                    List<Fieldtomac> list = locationMapper.selectFieldtomacById(Integer.parseInt(fg[i]));
+                    temp.addAll(list);
+
+                }
+            }
+            for (int i=0;i<temp.size();i++)
+                temp1.put(temp.get(i).getMac(),temp.get(i));
+
+            Iterator iter = temp1.entrySet().iterator();
+            while(iter.hasNext())
+            {
+                Map.Entry<String,Fieldtomac> entry = (Map.Entry<String,Fieldtomac>)iter.next();
+                locationMapper.addMAC(new Fieldtomac(entry.getKey(),index));
+            }
+
+            locationMapper.addLocation(new Locationtofield(modifyRoomInfo.getLocation(),index));
+            modifyRoomInfo.setField(String.valueOf(index));
+            roomService.modifyRoom(modifyRoomInfo);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date date = dateFormat.parse(modifyRoomInfo.getE_time());
+            Trigger trigger =newTrigger().startAt(date).build();
+            JobDetail job = newJob().ofType(AlertEnd.class).build();
+            JobDataMap jobDataMap = job.getJobDataMap();
+            jobDataMap.put("Room_Path",modifyRoomInfo.getName().hashCode());
+            jobDataMap.put("End_Time",modifyRoomInfo.getE_time());
+            jobDataMap.put("Room_Name",modifyRoomInfo.getName());
+            TimeService.scheduler.scheduleJob(job,trigger);
+        }
+
+        if (modifyRoomInfo.getRESERVE()==2)
+        {
+            Reserve_Multiple reserve_multiple = new Reserve_Multiple();
+            reserve_multiple.setPATH("/"+String.valueOf(modifyRoomInfo.getName().hashCode()));
+            reserve_multiple.setCURRENT_NO(0);
+            reserve_multiple.setTOTAL_NO(0);
+            reserve_multiple.setTYPE(modifyRoomInfo.getRESERVE());
+            reserve_multiple.setNAME(modifyRoomInfo.getName());
+            reserve_multiple.setTYPE_2(0);
+            reserve_multiple.setTYPE_4(0);
+            reserve_multiple.setTYPE_6(0);
+            reserve_multiple.setTYPE_8(0);
+            reserve_multiple.setTYPE_MORE(0);
+            roomService.addMultipleReserve(reserve_multiple);
+        }
+        else
+        {
+            Reserve reserve = new Reserve();
+            reserve.setCURRENT_No(0);
+            reserve.setTOTAL_No(0);
+            reserve.setNAME(modifyRoomInfo.getName());
+            reserve.setTYPE(modifyRoomInfo.getRESERVE());
+            reserve.setPATH("/"+String.valueOf(modifyRoomInfo.getName().hashCode()));
+            roomService.addReserve(reserve);
+        }
+
+        model.addAttribute("addRoomInfo",new AddRoomInfo());
+        onLine_User.path_count.put("/chat/"+modifyRoomInfo.getName().hashCode(),0);
+        System.out.println(modifyRoomInfo.getName());
+        System.out.println(modifyRoomInfo.getLocation());
         return "manage/addRoom";
     }
 }

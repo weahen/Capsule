@@ -23,6 +23,7 @@ public class room {
         this.LOCATION = addRoomInfo.getLocation();
         this.RESERVE = addRoomInfo.getRESERVE();
     }
+
     public room()
     {
 

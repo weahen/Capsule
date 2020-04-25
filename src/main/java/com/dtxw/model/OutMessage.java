@@ -9,6 +9,7 @@ public class OutMessage {
     private String content;//消息内容
     private String time;//时间
     private int id;//聊天室ID
+    private String mid;
 
     public OutMessage(InMessage inMessage) {
         this.content=inMessage.getContent();
@@ -17,6 +18,7 @@ public class OutMessage {
         this.path=inMessage.getPath();
         this.time=inMessage.getTime();
         this.uid=inMessage.getUid();
+        this.mid=inMessage.getMid();
     }
 
     public String getUid() {
@@ -66,6 +68,15 @@ public class OutMessage {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
     @Override
     public String toString() {
         return "uid = '" + "["+uid +"]"+
@@ -73,7 +84,8 @@ public class OutMessage {
                 "   path ='" + "["+path +"]"+
                 "   time ='" + "["+time +"]"+
                 "   id =" + "["+id +"]"+
-                "   content ='" + "["+content +"]"
+                "   content ='" + "["+content +"]"+
+                "   mid ='" + "["+mid+"]"
                 ;
     }
 }

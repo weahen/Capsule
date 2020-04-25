@@ -1,6 +1,7 @@
 package com.dtxw.controller;
 
 
+import com.dtxw.dataCache.onLine_User;
 import com.dtxw.entity.Fieldtomac;
 import com.dtxw.entity.Locationtofield;
 import com.dtxw.entity.room;
@@ -62,6 +63,7 @@ public class RoomController {
         messageLogger.info("RECV --- "+inmessage.toString());
 
     }
+
 
 //    @MessageMapping("/ios/chatroom/*")
 //    public void subscribeManagerios(String inmessage)
@@ -133,7 +135,7 @@ public class RoomController {
     public int addFieldId(String MAC,int FIELDID)
     {
 
-        System.out.println("ADD MAC");
+        System.out.println("ADD MAC : "+MAC+"  FIELDID : "+FIELDID);
            return locationMapper.addMAC(new Fieldtomac(MAC,FIELDID));
 
     }
@@ -142,7 +144,7 @@ public class RoomController {
     @ResponseBody
     public int addLocation(String Location,int FIELDID)
     {
-        System.out.println("ADD LOCATION");
+        System.out.println("ADD LOCATION : "+Location+"  FIELDID : "+FIELDID);
         return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
     }
 
@@ -175,5 +177,12 @@ public class RoomController {
         roomMapper.deleteRoomByID(id);
         model.addAttribute("deleteID",new deleteID());
         return "manage/chat_room";
+    }
+
+    @RequestMapping(value = "/onLine",method = RequestMethod.POST)
+    @ResponseBody
+    public int onlineUser(String path)
+    {
+        return onLine_User.path_count.get(path);
     }
 }

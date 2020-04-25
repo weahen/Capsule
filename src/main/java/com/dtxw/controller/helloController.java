@@ -29,4 +29,10 @@ public class helloController {
             httpSession.setAttribute("RoomList",roomMapper.getAllRoom());
         return "ChatPage";
     }
+
+    @RequestMapping("/hello2")
+    public String hello2()
+    {
+        return "index1";
+    }
 }

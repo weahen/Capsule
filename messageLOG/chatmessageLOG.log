@@ -1,6 +1,2 @@
-SEND --- uid = '[0]   name ='[null]   path ='[/1338950599]   time ='[null]   id =[0]   content ='[222]
-RECV --- uid = '[0]   name ='[null]   path ='[/1338950599]   time ='[null]   id =[0]   mac ='[null]   content ='[222]
-SEND --- uid = '[0]   name ='[null]   path ='[/chat/1338950599]   time ='[null]   id =[0]   content ='[Online User1]
-SEND --- uid = '[0]   name ='[null]   path ='[/chat/1338950599]   time ='[null]   id =[0]   content ='[Online User2]
-SEND --- uid = '[0]   name ='[null]   path ='[/chat/1338950599]   time ='[null]   id =[0]   content ='[Online User1]
-SEND --- uid = '[0]   name ='[null]   path ='[/chat/1338950599]   time ='[null]   id =[0]   content ='[Online User0]
+SEND --- uid = '[0]   name ='[null]   path ='[/1552310526]   time ='[null]   id =[0]   content ='[Room Closed at2019-12-05 16:17:39]
+SEND --- uid = '[0]   name ='[null]   path ='[/1552310526]   time ='[null]   id =[0]   content ='[Room Closed at2019-12-05 16:23:48]

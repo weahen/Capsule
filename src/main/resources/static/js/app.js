@@ -1,111 +1,127 @@
-var stompClient = null;
+/* -----------------------------------------------
+/* How to use? : Check the GitHub README
+/* ----------------------------------------------- */
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#notice").html("");
-}
-
-function connect() {
-	var socket = new SockJS('/endpoint-websocket');
-    stompClient = Stomp.over(socket);
-//    welcome();
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        
-        //订阅群聊消息
-        stompClient.subscribe('/chat/IOT', function (result) {
-        	showContent(JSON.parse(result.body));
-        });
-        
-        //订阅在线用户消息
-        // stompClient.subscribe('/topic/onlineuser', function (result) {
-        // 	showOnlieUser(JSON.parse(result.body));
-        // });
-//        stompClient.send("/app/v6/ol", {},JSON.stringify({'content': $("#editArea").val()}));
-        
-        
-    });
-    
-}
-
-// function sendonlinerequest()
-// {
-// 	stompClient.send("/app/v6/ol",{},null);
-// 	console.log("Online Request");
-// }
-//断开连接
-function disconnect() {
-	// stompClient.send("/app/Logoff", {}, JSON.stringify({'content': $("#editArea").val()}));
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Disconnected");
-}
-
-//发送聊天记录
-function sendContent() {
-    stompClient.send("/app/chatroom/IOT", {}, JSON.stringify({'content': $("#editArea").val(),'path':"/IOT"}));
-    
-    
-}
-
-//显示聊天记录
-function showContent(body) {
-    $("#record").append("<tr><td>" + body.content + "</td> <td>");
-}
-
-// function welcome() {
-// 	var xmlHttp;
-// 	function GetXmlObj()
-// 	{
-// 		if(window.XMLHttpRequest)
-// 			{
-// 				xmlhttp = new XMLHttpRequest();
-//
-// 			}
-// 		else
-// 			{
-// 				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 			}
-// 		return xmlhttp;
-// 	}
-// 	xmlHttp=GetXmlObj();
-// 	if(xmlHttp)
-//
-//
-// 	xmlHttp.open("get","/welcome",false);
-// 	xmlHttp.send();
-// 	$("#welcome").html(xmlHttp.responseText);
-// }
-//
-// //显示实时在线用户
-// function showOnlieUser(body) {
-//     $("#online").html("<tr><td>" + body.content + "</td> <td>"+new Date(body.time).toLocaleTimeString()+"</td></tr>");
-// }
-
-
-$(function () {
-    
-	connect();//自动上线
-	
-	// welcome();
-	
-	$("form").on('submit', function (e) {
-        e.preventDefault();
-    });
-     
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() {
-    	sendContent(); 
-    });
+/* To load a config file (particles.json) you need to host this demo (MAMP/WAMP/local)... */
+/*
+particlesJS.load('particles-js', 'particles.json', function() {
+  console.log('particles.js loaded - callback');
 });
+*/
 
+/* Otherwise just put the config content (json): */
+
+particlesJS('particles-js',
+
+	{
+		"particles": {
+			"number": {
+				"value": 40,
+				"density": {
+					"enable": true,
+					"value_area": 800
+				}
+			},
+			"color": {
+				"value": "#ffffff"
+			},
+			"shape": {
+				"type": "circle",
+				"stroke": {
+					"width": 0,
+					"color": "#000000"
+				},
+				"polygon": {
+					"nb_sides": 5
+				},
+				"image": {
+					"src": "img/github.svg",
+					"width": 100,
+					"height": 100
+				}
+			},
+			"opacity": {
+				"value": 0.7,
+				"random": false,
+				"anim": {
+					"enable": false,
+					"speed": 1,
+					"opacity_min": 0.1,
+					"sync": false
+				}
+			},
+			"size": {
+				"value": 3,
+				"random": true,
+				"anim": {
+					"enable": false,
+					"speed": 40,
+					"size_min": 0.1,
+					"sync": false
+				}
+			},
+			"line_linked": {
+				"enable": true,
+				"distance": 150,
+				"color": "#ffffff",
+				"opacity": 0.6,
+				"width": 1
+			},
+			"move": {
+				"enable": true,
+				"speed": 6,
+				"direction": "none",
+				"random": false,
+				"straight": false,
+				"out_mode": "out",
+				"bounce": false,
+				"attract": {
+					"enable": false,
+					"rotateX": 600,
+					"rotateY": 1200
+				}
+			}
+		},
+		"interactivity": {
+			"detect_on": "canvas",
+			"events": {
+				"onhover": {
+					"enable": true,
+					"mode": "grab"
+				},
+				"onclick": {
+					"enable": true,
+					"mode": "push"
+				},
+				"resize": true
+			},
+			"modes": {
+				"grab": {
+					"distance": 200,
+					"line_linked": {
+						"opacity": 1
+					}
+				},
+				"bubble": {
+					"distance": 400,
+					"size": 40,
+					"duration": 2,
+					"opacity": 8,
+					"speed": 3
+				},
+				"repulse": {
+					"distance": 200,
+					"duration": 0.4
+				},
+				"push": {
+					"particles_nb": 4
+				},
+				"remove": {
+					"particles_nb": 2
+				}
+			}
+		},
+		"retina_detect": false
+	}
+
+);

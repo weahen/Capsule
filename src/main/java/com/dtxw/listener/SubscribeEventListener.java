@@ -21,7 +21,7 @@ public class SubscribeEventListener implements ApplicationListener<SessionSubscr
         String ID = headerAccessor.getSessionId();
         onLine_User.subscribeID_Path.put(ID,path);
         onLine_User.path_count.put(path,onLine_User.path_count.get(path)+1);
-        InMessage inMessage = new InMessage("0",path,"Online User"+onLine_User.path_count.get(path));
+        InMessage inMessage = new InMessage("-1",path,String.valueOf(onLine_User.path_count.get(path)));
         chatService.sendMessage(inMessage);
 
 

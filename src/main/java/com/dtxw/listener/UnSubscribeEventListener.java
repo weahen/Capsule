@@ -21,7 +21,7 @@ public class UnSubscribeEventListener implements ApplicationListener<SessionUnsu
         String path = onLine_User.subscribeID_Path.get(id);
         onLine_User.subscribeID_Path.remove(id);
         onLine_User.path_count.put(path,onLine_User.path_count.get(path)-1);
-        InMessage inMessage = new InMessage("0",path,"Online User"+onLine_User.path_count.get(path));
+        InMessage inMessage = new InMessage("-1",path,String.valueOf(onLine_User.path_count.get(path)));
         chatService.sendMessage(inMessage);
 
     }
