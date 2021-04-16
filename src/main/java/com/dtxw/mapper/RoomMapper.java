@@ -1,9 +1,6 @@
 package com.dtxw.mapper;
 
-import com.dtxw.entity.Reserve;
-import com.dtxw.entity.Reserve_Multiple;
-import com.dtxw.entity.room;
-import com.dtxw.entity.room_shotcut;
+import com.dtxw.entity.*;
 import com.dtxw.model.modify_to_room_info;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -32,7 +29,8 @@ public interface RoomMapper {
     @Insert("insert into Room(NAME,PATH,FIELD,START_TIME,END_TIME,LOCATION,RESERVE) values (#{NAME},#{PATH},#{FIELD},#{START_TIME},#{END_TIME},#{LOCATION},#{RESERVE})")
     int addRoom(room r);
 
-    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION,RESERVE FROM fieldtomac INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
+    @Select("SELECT room.ID,`NAME`,PATH,room.FIELD,START_TIME,END_TIME,LOCATION,RESERVE FROM fieldtomac " +
+            "INNER JOIN room ON fieldtomac.FIELD=room.FIELD where MAC=#{mac} AND END_TIME>NOW();")
     List<room> selectByMac(String mac);
 
     @Select("SELECT * FROM room WHERE END_TIME>NOW();")
@@ -72,6 +70,11 @@ public interface RoomMapper {
 
     @Update("update room set NAME=#{NAME},PATH=#{PATH},FIELD=#{FIELD},START_TIME=#{START_TIME},END_TIME=#{END_TIME},LOCATION=#{LOCATION},RESERVE=#{RESERVE} where NAME=#{orign}")
     boolean modify(modify_to_room_info modifyRoomInfo);
+
+    @Select("select * from room_ad where path=#{path}")
+    List<room_ad> get_room_AD_INFO(String path);
+
+
 
 
 }

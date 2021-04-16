@@ -99,4 +99,26 @@ public class ImgController {
         }
     }
 
+    @RequestMapping(value = "/get_AD_Img/{path}/{name}",method = RequestMethod.POST)
+    @ResponseBody
+    public void get_AD_Img(HttpServletResponse response,@PathVariable String path,@PathVariable String name) throws IOException {
+        ServletInputStream servletInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File file = new File("c:/AD_imgs/"+path+"/"+name);
+        byte[] buffer = new byte[1024];
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        inputStream = new FileInputStream(file);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        outputStream =response.getOutputStream();
+        int flag = bufferedInputStream.read(buffer);
+        while (flag!=-1)
+        {
+            outputStream.write(buffer,0,flag);
+            outputStream.flush();
+            flag = bufferedInputStream.read(buffer);
+        }
+        inputStream.close();
+
+    }
 }

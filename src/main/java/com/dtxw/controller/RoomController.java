@@ -2,10 +2,7 @@ package com.dtxw.controller;
 
 
 import com.dtxw.dataCache.onLine_User;
-import com.dtxw.entity.Fieldtomac;
-import com.dtxw.entity.Locationtofield;
-import com.dtxw.entity.room;
-import com.dtxw.entity.room_shotcut;
+import com.dtxw.entity.*;
 import com.dtxw.mapper.LocationMapper;
 import com.dtxw.mapper.RoomMapper;
 import com.dtxw.model.InMessage;
@@ -112,9 +109,6 @@ public class RoomController {
             temp.add(roomMapper.selectByUnitMac("0"));
             return temp;
         }
-
-
-
     }
 
     @RequestMapping(value = "/getFieldId")
@@ -129,7 +123,6 @@ public class RoomController {
             return locationtofield.getField();
 
     }
-
     @RequestMapping(value = "/addFieldId" ,method = RequestMethod.GET)
     @ResponseBody
     public int addFieldId(String MAC,int FIELDID)
@@ -139,7 +132,6 @@ public class RoomController {
            return locationMapper.addMAC(new Fieldtomac(MAC,FIELDID));
 
     }
-
     @RequestMapping(value = "/addLocation",method = RequestMethod.GET)
     @ResponseBody
     public int addLocation(String Location,int FIELDID)
@@ -147,7 +139,6 @@ public class RoomController {
         System.out.println("ADD LOCATION : "+Location+"  FIELDID : "+FIELDID);
         return locationMapper.addLocation(new Locationtofield(Location,FIELDID));
     }
-
     @RequestMapping(value = "/getUnitInfo",method = RequestMethod.POST)
     @ResponseBody
     public List<room_shotcut> getUnitInfo(String location)
@@ -184,5 +175,13 @@ public class RoomController {
     public int onlineUser(String path)
     {
         return onLine_User.path_count.get(path);
+    }
+
+
+    @RequestMapping(value = "/getRoom_ADList",method = RequestMethod.POST)
+    @ResponseBody
+    public List<room_ad> getRoom_ADList(String path)
+    {
+        return roomMapper.get_room_AD_INFO(path);
     }
 }
